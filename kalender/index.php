@@ -8,7 +8,7 @@
 <body>
 <?php
 
-function build_calendar($month,$year,$dateArray) {
+function build_calendar($month,$year) {
 
     $today_date = date("d");
     $today_date = ltrim($today_date, '0');
@@ -85,7 +85,7 @@ $dateComponents = getdate();
 $month = $dateComponents['mon']; 			     
 $year = $dateComponents['year'];
 
-echo build_calendar($month,$year,$dateArray);
+echo build_calendar($month,$year);
 
 ?>
 </body>
