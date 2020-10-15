@@ -7,7 +7,7 @@
 </head>
 <body>
 
-    <form action="kalender/test/index.php">
+    <form action="index.php">
 
         <button>Lägg till event</button>
 
@@ -15,7 +15,7 @@
     
     <?php
 
-        include_once 'connect.php';
+        include_once 'connection.php';
 
         $sql = "SELECT * FROM event";
 
@@ -26,15 +26,11 @@
     $sqldata = mysqli_query($conn, $sqlget) or die("error");
 
     echo "<table>";
-    echo "<tr><th>Ta bort</th><th>Händelse</th><th>Beskrivning</th><th>Startdatum</th><th>Slutdatum</th></tr>";
+    echo "<tr><th>Händelse</th><th>Beskrivning</th><th>Startdatum</th><th>Slutdatum</th><th>Ta bort</th></tr>";
 
     while($row = mysqli_fetch_assoc($sqldata)) {
-
+        
         echo "<tr><td>";
-        ?>
-        <a href="kalender/test/delete.php?id=<?php echo $row['eventID'];?>">Delete</a>
-        <?php
-        echo "</td><td>";
         echo $row['eventTitle'];
         echo "</td><td>";
         echo $row['description'];
@@ -42,6 +38,10 @@
         echo $row['startDate'];
         echo "</td><td>";
         echo $row['endDate'];
+        echo "</td><td>";
+        ?>
+        <a href="delete.php?id=<?php echo $row['eventID'];?>">Delete</a>
+        <?php
         echo "</td></tr>";
 
     }

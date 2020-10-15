@@ -23,7 +23,7 @@
     } else{
 
         $sql = "INSERT INTO event(eventTitle,description,startDate,endDate) VALUES('$_POST[eventTitle]', '$_POST[description]', '$_POST[startDate]', '$_POST[endDate]')";
-    header('location: ../../calendar2.php');
+    header('location:calendar2.php');
     if (mysqli_query($conn, $sql)){
     } else{
         echo "ERROR: Was not able to execute $sql. " . mysqli_error($conn);

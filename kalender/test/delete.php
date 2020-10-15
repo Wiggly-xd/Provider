@@ -1,7 +1,7 @@
 <html>
 <body>
 <?php
-    require_once 'test.php';
+    require_once 'calendar2.php';
 
     $servername = 'localhost';
     $username = 'root';
@@ -17,7 +17,7 @@
 
     if (mysqli_query($conn, $sql)){
         mysqli_close($conn);
-        header('Location:calendar.php');
+        header('Location:calendar2.php');
         exit;
     } else{
         echo "Error deleting record";
