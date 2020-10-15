@@ -25,7 +25,13 @@
             echo $ev["eventTitle"] . " " . $ev["description"] . " " . $ev["startDate"] . " " . $ev["endDate"],'<br/>';
         }
 
+        echo "
+            <form action='redigera.php'>
 
+                <button>Redigera</button>
+
+            </form>
+        ";
 
     ?>
 
