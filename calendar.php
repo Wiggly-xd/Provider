@@ -6,17 +6,28 @@
     <title>Document</title>
 </head>
 <body>
+
+    <form action="laggtill.php">
+
+        <button>Lägg till event</button>
+
+    </form>
     
-    <div class="content">
+    <?php
 
-        <div class="box">
+        include_once 'connect.php';
 
-            <div class="box1">1</div>
-            
+        $sql = "SELECT * FROM event";
 
-        </div>
+        $result = mysqli_query($conn, $sql);
 
-    </div>
+        while($ev = mysqli_fetch_array($result)){
+            echo $ev["eventTitle"] . " " . $ev["description"] . " " . $ev["startDate"] . " " . $ev["endDate"],'<br/>';
+        }
+
+
+
+    ?>
 
 </body>
 </html>
