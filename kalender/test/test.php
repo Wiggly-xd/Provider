@@ -14,12 +14,22 @@
     <?php echo $_POST["endDate"]; ?><br>
 
 <?php
-    $sql = "INSERT INTO event(eventTitle,description,startDate,endDate) VALUES('$_POST[eventTitle]', '$_POST[description]', '$_POST[startDate]', '$_POST[endDate]')";
+    $startdate = $_POST['startDate'];
+    $enddate = $_POST['endDate'];
+
+    if($enddate<$startdate){
+
+        echo "Slutdatum kan inte vara mindre än startdatum" . mysqli_error($conn);
+    } else{
+
+        $sql = "INSERT INTO event(eventTitle,description,startDate,endDate) VALUES('$_POST[eventTitle]', '$_POST[description]', '$_POST[startDate]', '$_POST[endDate]')";
+    header('location: ../../calendar2.php');
     if (mysqli_query($conn, $sql)){
-        echo "Records added successfully.";
     } else{
         echo "ERROR: Was not able to execute $sql. " . mysqli_error($conn);
     }
+    }
+
 ?>
 </body>
 </html>
