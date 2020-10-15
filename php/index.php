@@ -15,15 +15,20 @@ FROM
 INNER JOIN spage
 ON post.postID = spage.pageID';
 
-$stmt = $mysqli->prepare("INSERT INTO post (postTitle, pText, postDate) VALUES (?, ?, ?)");
+$stmt = $mysqli->prepare("SELECT serviceType FROM spage INNER JOIN post ON spage.pageID = post.postID");
 
-$stmt->bind_param("sss", $postTitle, $pText, $date);
+//$stmt = $mysqli->prepare("INSERT INTO post (postTitle, pText, postDate) VALUES (?, ?, ?)");
+
+//$stmt->bind_param("i", $serviceType);
 
 $stmt->execute();
 
 $stmt->close();
 
-
-header('Location: posts.php');
+while($stmt = true){
+    echo "wiki bro";
+    break;
+}
+//header('Location: posts.php');
 
 ?>
