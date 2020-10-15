@@ -1,11 +1,14 @@
+<?php 
+$pagetitle = "Gustav 2 kanske finns";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title><?php echo $pagetitle; ?></title>
 </head>
 <body>
-    
+    <form action=""></form>
 </body>
 </html>
