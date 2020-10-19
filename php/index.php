@@ -8,27 +8,26 @@ $pText = $_POST['pText'];
 $date = date("Y-m-d");
 $serviceType = $_POST['serviceType'];
 
-$query = 'SELECT 
-    *
-FROM 
-    post
-INNER JOIN spage
-ON post.postID = spage.pageID';
 
-$stmt = $mysqli->prepare("SELECT serviceType FROM spage INNER JOIN post ON spage.pageID = post.postID");
 
-//$stmt = $mysqli->prepare("INSERT INTO post (postTitle, pText, postDate) VALUES (?, ?, ?)");
-
-//$stmt->bind_param("i", $serviceType);
+$stmt = $mysqli->prepare("SELECT serviceType FROM spage INNER JOIN post ON spage.pageID = post.pageID");
 
 $stmt->execute();
 
 $stmt->close();
 
+$stmt2 = $mysqli->prepare("INSERT INTO post (postTitle, pText, postDate, postType) VALUES (?, ?, ?, ?)");
+
+$stmt2->bind_param("sssi", $postTitle, $pText, $date, $serviceType);
+
+$stmt2->execute();
+
+$stmt2->close();
+/*
 while($stmt = true){
     echo "wiki bro";
     break;
-}
-//header('Location: posts.php');
+}*/
+header('Location: posts.php');
 
 ?>
