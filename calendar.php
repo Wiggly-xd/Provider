@@ -22,16 +22,9 @@
         $result = mysqli_query($conn, $sql);
 
         while($ev = mysqli_fetch_array($result)){
-            echo $ev["eventTitle"] . " " . $ev["description"] . " " . $ev["startDate"] . " " . $ev["endDate"],'<br/>';
+            echo $ev["eventTitle"] . " " . $ev["description"] . " " . $ev["startDate"] . " " . $ev["endDate"],'<br/>', 
+                '<form action="redigera.php" name="edit" method="post"><button>Redigera</button></form>';
         }
-
-        echo "
-            <form action='redigera.php'>
-
-                <button>Redigera</button>
-
-            </form>
-        ";
 
     ?>
 
