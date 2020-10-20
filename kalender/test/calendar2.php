@@ -40,7 +40,7 @@
         echo $row['endDate'];
         echo "</td><td>";
         ?>
-        <a href="delete.php?id=<?php echo $row['eventID'];?>">Delete</a>
+        <a href="../../redigerad.php?id=<?php echo $row['eventID'];?>">Redigera</a>
         <?php
         echo "</td></tr>";
 
