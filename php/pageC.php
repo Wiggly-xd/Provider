@@ -6,29 +6,26 @@ include_once 'connect.php';
 $serviceTitle = $_POST['serviceTitle'];
 $sDate = date("Y-m-d");
 $serviceType = $_POST['serviceType'];
+$serviceID = $_POST['serviceID'];
 
+$stmt1 = $mysqli->prepare("INSERT INTO spage (serviceType, serviceID) VALUES (?, ?)");
 
+$stmt1->bind_param("ii", $serviceType, $serviceID);
 
-$stmt = $mysqli->prepare("INSERT INTO spage (serviceType) VALUES (?)");
+$stmt1->execute();
 
-$stmt->bind_param("i", $serviceType);
+$pageID = mysqli_insert_id($mysqli);
 
-$stmt->execute();
+$stmt1->close();
 
-$stmt->close();
+$stmt2 = $mysqli->prepare("INSERT INTO service (serviceTitle, serviceDate, serviceID) VALUES (?, ?, ?)");
 
-$stmt2 = $mysqli->prepare("INSERT INTO service (serviceTitle, serviceDate) VALUES (?, ?)");
-
-$stmt2->bind_param("ss", $serviceTitle, $sDate);
+$stmt2->bind_param("ssi", $serviceTitle, $sDate, $serviceID);
 
 $stmt2->execute();
 
 $stmt2->close();
-/*
-while($stmt = true){
-    echo "wiki bro";
-    break;
-}*/
-header('Location: test.html');
+
+header('Location: test.php?pageID='.$pageID);
 
 ?>
