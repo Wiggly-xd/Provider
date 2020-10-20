@@ -36,7 +36,28 @@
                 ";
                 $dettaärenvariablesominnehållereventID = $ev['eventID'];
         }
+    ?>
+    <?php
+        session_start();
+        include_once 'connect.php';
 
+        $sql = 'SELECT eventID FROM event';
+
+        $result = mysqli_query($conn, $sql);
+
+
+        echo '<label for="eventID">Välj event:</label>';
+        echo '<select id="eventID">';
+        while($rev = mysqli_fetch_array($result)){
+
+            $length = count($rev);
+    
+
+            for ($i=1; $i<$length; $i++){
+                echo '<option value="' . $rev["eventID"] . 'name="' . $rev["eventID"] . '">'. $rev["eventID"] . '</option>';
+            }
+        }
+        echo '</select>';
     ?>
    <form action="redigerad.php" method="post">
         <input type="text" name="eventTitle" value="<?php echo $title; ?>"placeholder="Skriv ny titel">

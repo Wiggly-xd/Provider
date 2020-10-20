@@ -23,6 +23,7 @@
 
             $sql = "UPDATE event SET eventTitle='$title', description='$description' WHERE eventID=$id";
             mysqli_query($conn, $sql);
+            
         }
         header('location: calendar.php');
     ?>
