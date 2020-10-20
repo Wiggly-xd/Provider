@@ -8,22 +8,23 @@
 <body>
     
     <?php 
-    
+
+        session_start();
         require_once 'connect.php';
 
-        $title = "";
-        $description = "";
+        $id = 0;
+        $title = '';
+        $description = '';
 
-        if(isset($_GET['edit'])){
-            $id = $_GET['eventID'];
-            $result = $mysqli->query("SELECT * FROM event WHERE id=$id") or die($mysqli->error());
-            if (count($result)==1){
-                $row = $result->fetch_array();
-                $title = $row['eventTitle'];
-                $description = $row['description'];
-            }
+        if(isset($_POST['eventID'])){
+            $id = $_POST['eventID'];
+            $title = $_POST['eventTitle'];
+            $description = $_POST['description'];
+
+            $sql = "UPDATE event SET eventTitle='$title', description='$description' WHERE eventID=$id";
+            mysqli_query($conn, $sql);
         }
-
+        header('location: calendar.php');
     ?>
 </body>
 </html>
