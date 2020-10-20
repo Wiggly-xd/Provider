@@ -13,9 +13,12 @@ while($qryres = mysqli_fetch_array($res)){
 
     $length = count($qryres);
     
+    $serviceID = $qryres["serviceID"];
 
     for ($i=1; $i<$length; $i++){
-    echo '<option value="' . $qryres["serviceID"] . 'name="' . $qryres["serviceID"] . '">'. $qryres["serviceID"] . '</option>';
+    echo '<option value="' . $serviceID . 'name="' . "serviceID" . '">'. $serviceID . '</option>';
+    $_SESSION['serviceID'] = $serviceID;
+    //<option value=$serviceID name="serviceID">$serviceID</option>
     }
 }
 echo '</select>';
