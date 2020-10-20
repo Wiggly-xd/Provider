@@ -21,19 +21,29 @@
 
         $result = mysqli_query($conn, $sql);
 
+        $title = '';
+        $description = '';
+        $dettaärenvariablesominnehållereventID = "";
+
+
         while($ev = mysqli_fetch_array($result)){
-            echo $ev["eventTitle"] . " " . $ev["description"] . " " . $ev["startDate"] . " " . $ev["endDate"],'<br/>';
+            echo "<div>
+                    <div>".$ev['eventTitle']."</div>
+                    <div>".$ev['description']."</div>
+                    <div>".$ev['startDate']."</div>
+                    <div>".$ev['endDate']."</div>
+                </div>
+                ";
+                $dettaärenvariablesominnehållereventID = $ev['eventID'];
         }
 
-        echo "
-            <form action='redigera.php'>
-
-                <button>Redigera</button>
-
-            </form>
-        ";
-
     ?>
+   <form action="redigerad.php" method="post">
+        <input type="text" name="eventTitle" value="<?php echo $title; ?>"placeholder="Skriv ny titel">
+        <input type="text" name="description" value="<?php echo $description; ?>" placeholder="Skriv ny beskrivning">
+        <input type="hidden" name="eventID" value="<?php echo $dettaärenvariablesominnehållereventID; ?>">
+        <button type="submit" name="save">Uppdatera</button>
+    </form>
 
 </body>
 </html>
