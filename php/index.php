@@ -6,29 +6,19 @@ include_once 'connect.php';
 $postTitle = $_POST['postTitle'];
 $pText = $_POST['pText'];
 $date = date("Y-m-d");
-$serviceType = $_POST['serviceType'];
+$serviceID = $_SESSION['serviceID'];
+$pageID = $_SESSION['pageID'];
 
-$query = 'SELECT 
-    *
-FROM 
-    post
-INNER JOIN spage
-ON post.postID = spage.pageID';
+//$qry = 'SELECT pageID FROM spage INNER JOIN post ON spage.serviceID = post.serviceID';
 
-$stmt = $mysqli->prepare("SELECT serviceType FROM spage INNER JOIN post ON spage.pageID = post.postID");
+$stmt = $mysqli->prepare("INSERT INTO post (postTitle, pText, postDate, serviceID, pageID) VALUES (?, ?, ?, ?, ?)");
 
-//$stmt = $mysqli->prepare("INSERT INTO post (postTitle, pText, postDate) VALUES (?, ?, ?)");
-
-//$stmt->bind_param("i", $serviceType);
+$stmt->bind_param("sssii", $postTitle, $pText, $date, $serviceID, $pageID);
 
 $stmt->execute();
 
 $stmt->close();
 
-while($stmt = true){
-    echo "wiki bro";
-    break;
-}
-//header('Location: posts.php');
+header('Location: posts.php');
 
 ?>
