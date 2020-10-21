@@ -34,35 +34,32 @@
                     <div>".$ev['endDate']."</div>
                 </div>
                 ";
-                $dettaärenvariablesominnehållereventID = $ev['eventID'];
         }
     ?>
     <?php
         session_start();
         include_once 'connect.php';
 
-        $sql = 'SELECT eventID FROM event';
+        
 
+        $sql = "SELECT eventID, eventTitle FROM event ";
         $result = mysqli_query($conn, $sql);
 
-
-        echo '<label for="eventID">Välj event:</label>';
-        echo '<select id="eventID">';
+        echo '<form action="redigerad.php" method="post">';
+        echo '<label for="eventTitle">Välj event:</label>';
+        echo '<select id="eventID" name="eventID">';
         while($rev = mysqli_fetch_array($result)){
 
-            $length = count($rev);
     
 
-            for ($i=1; $i<$length; $i++){
-                echo '<option value="' . $rev["eventID"] . 'name="' . $rev["eventID"] . '">'. $rev["eventID"] . '</option>';
-            }
+            
+        echo '<option value="' . $rev["eventID"] . '" >'. $rev["eventTitle"] . '</option>';
+        
         }
         echo '</select>';
     ?>
-   <form action="redigerad.php" method="post">
         <input type="text" name="eventTitle" value="<?php echo $title; ?>"placeholder="Skriv ny titel">
         <input type="text" name="description" value="<?php echo $description; ?>" placeholder="Skriv ny beskrivning">
-        <input type="hidden" name="eventID" value="<?php echo $dettaärenvariablesominnehållereventID; ?>">
         <button type="submit" name="save">Uppdatera</button>
     </form>
 

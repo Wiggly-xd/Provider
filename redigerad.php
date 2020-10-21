@@ -12,16 +12,17 @@
         session_start();
         require_once 'connect.php';
 
-        $id = 0;
+        $eventID = $_POST['eventID'];
         $title = '';
         $description = '';
 
         if(isset($_POST['eventID'])){
-            $id = $_POST['eventID'];
+            $eventid = $_POST['eventID'];
             $title = $_POST['eventTitle'];
             $description = $_POST['description'];
 
-            $sql = "UPDATE event SET eventTitle='$title', description='$description' WHERE eventID=$id";
+
+            $sql = "UPDATE event SET eventTitle='$title', description='$description' WHERE eventID=$eventID";
             mysqli_query($conn, $sql);
             
         }
