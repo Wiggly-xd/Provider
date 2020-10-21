@@ -1,6 +1,13 @@
 <?php
-session_start();
 include_once 'connect.php';
+
+echo '<form action="delete.php" method="post">';
+
+include_once 'loop.php';
+
+echo '<input type="submit" value="Delete" name="Delete">';
+echo '</form>';
+
 
 $stmt = 'SELECT * FROM service, spage, post WHERE service.serviceID = post.serviceID AND post.pageID = spage.pageID';
 
