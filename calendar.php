@@ -7,6 +7,12 @@
 </head>
 <body>
 
+    <form action="loggain.php">
+    
+        <button>Logga in</button>
+
+    </form>
+
     <form action="laggtill.php">
 
         <button>Lägg till event</button>
