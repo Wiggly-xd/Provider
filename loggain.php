@@ -7,7 +7,7 @@
 </head>
 <body>
     
-    <from action="inloggning.php">
+    <form action="inloggning.php">
     
         <input type="text" name="anvandarnamn" placeholder="Användar">
 

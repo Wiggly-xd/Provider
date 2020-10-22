@@ -7,17 +7,7 @@
 </head>
 <body>
 
-<<<<<<< Updated upstream
-    <form action="loggain.php">
-    
-        <button>Logga in</button>
-
-    </form>
-
-    <form action="laggtill.php">
-=======
     <form action="kalender/test/index.php">
->>>>>>> Stashed changes
 
         <button>Lägg till event</button>
 
@@ -33,6 +23,8 @@
 
         $title = '';
         $description = '';
+        $startDate = '';
+        $endDate = '';
         $dettaärenvariablesominnehållereventID = "";
 
 
@@ -63,13 +55,15 @@
     
 
             
-        echo '<option value="' . $rev["eventID"] . '" >'. $rev["eventTitle"] . '</option>';
+        echo '<option value="' . $rev["eventID"] . '" >'. $rev["eventTitle"] .  $rev["startDate"] . $rev["endDate"] .'</option>';
         
         }
         echo '</select>';
     ?>
         <input type="text" name="eventTitle" value="<?php echo $title; ?>"placeholder="Skriv ny titel">
         <input type="text" name="description" value="<?php echo $description; ?>" placeholder="Skriv ny beskrivning">
+        <input type ="date" name=startDate" value="<?php echo $startDate; ?>">
+        <input type ="date" name=endDate" value="<?php echo $endDate; ?>">
         <button type="submit" name="save">Uppdatera</button>
     </form>
 
