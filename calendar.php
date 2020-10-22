@@ -7,6 +7,7 @@
 </head>
 <body>
 
+<<<<<<< Updated upstream
     <form action="loggain.php">
     
         <button>Logga in</button>
@@ -14,6 +15,9 @@
     </form>
 
     <form action="laggtill.php">
+=======
+    <form action="kalender/test/index.php">
+>>>>>>> Stashed changes
 
         <button>Lägg till event</button>
 
