@@ -7,6 +7,12 @@
 </head>
 <body>
 
+    <form action="loggain.php">
+    
+        <button>Logga in</button>
+
+    </form>
+
     <form action="laggtill.php">
 
         <button>Lägg till event</button>
@@ -34,14 +40,32 @@
                     <div>".$ev['endDate']."</div>
                 </div>
                 ";
-                $dettaärenvariablesominnehållereventID = $ev['eventID'];
         }
-
     ?>
-   <form action="redigerad.php" method="post">
+    <?php
+        session_start();
+        include_once 'connect.php';
+
+        
+
+        $sql = "SELECT eventID, eventTitle FROM event ";
+        $result = mysqli_query($conn, $sql);
+
+        echo '<form action="redigerad.php" method="post">';
+        echo '<label for="eventTitle">Välj event:</label>';
+        echo '<select id="eventID" name="eventID">';
+        while($rev = mysqli_fetch_array($result)){
+
+    
+
+            
+        echo '<option value="' . $rev["eventID"] . '" >'. $rev["eventTitle"] . '</option>';
+        
+        }
+        echo '</select>';
+    ?>
         <input type="text" name="eventTitle" value="<?php echo $title; ?>"placeholder="Skriv ny titel">
         <input type="text" name="description" value="<?php echo $description; ?>" placeholder="Skriv ny beskrivning">
-        <input type="hidden" name="eventID" value="<?php echo $dettaärenvariablesominnehållereventID; ?>">
         <button type="submit" name="save">Uppdatera</button>
     </form>
 
