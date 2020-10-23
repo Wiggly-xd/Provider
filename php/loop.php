@@ -7,7 +7,7 @@ $stmt = 'SELECT serviceID FROM service';
 $res = mysqli_query($mysqli, $stmt);
 
 
-echo '<label for="serviceID">Select service to post in:</label>';
+echo '<label for="serviceID">Select service:</label>';
 echo '<select id="serviceID">';
 while($qryres = mysqli_fetch_array($res)){
 

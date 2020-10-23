@@ -1,27 +1,27 @@
 <?php
 session_start();
-
 include_once 'connect.php';
 
-echo '<label for="serviceID">Select service to delete:</label>';
-echo '<select id="serviceID">';
-while($qryres = mysqli_fetch_array($res)){
+$serviceID = $_SESSION['serviceID'];
 
-    $length = count($qryres);
-    
-    $serviceID = $qryres["serviceID"];
+$stmt = $mysqli->prepare("DELETE FROM service WHERE serviceID='$serviceID'");
 
-    for ($i=1; $i<$length; $i++){
-    echo '<option value="' . $serviceID . 'name="' . "serviceID" . '">'. $serviceID . '</option>';
-    $_SESSION['serviceID'] = $serviceID;
-    echo '<option value="'$serviceID'" name="serviceID">'$serviceID'</option>';
-    $query = 'DELETE * FROM service, spage, post WHERE service.serviceID = $serviceID';
-    $stmt = $mysqli->prepare($query);
-    $stmt->bind_param("ss", $type, $reporter);
-    $stmt->execute();
-    }
-}
-echo '</select>';
+$stmt->execute();
 
+$stmt->close();
+
+$stmt1 = $mysqli->prepare("DELETE FROM spage WHERE serviceID='$serviceID'");
+
+$stmt1->execute();
+
+$stmt1->close();
+
+$stmt2 = $mysqli->prepare("DELETE FROM post WHERE serviceID='$serviceID'");
+
+$stmt2->execute();
+
+$stmt2->close();
+
+header('Location: posts.php');
 
 ?>
