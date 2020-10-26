@@ -31,6 +31,20 @@ $stmt->execute();
 
 $stmt->close();
 
+$postTitle = $_POST['postTitle'];
+$pText = $_POST['pText'];
+$date = date("Y-m-d");
+$serviceID = $_SESSION['serviceID'];
+$pageID = $_SESSION['pageID'];
+$filepath = $_SESSION['filepath'];
+
+$stmt2 = $mysqli->prepare("INSERT INTO history (historyDate, historyText, serviceID, historyImage) VALUES (?, ?, ?, ?)");
+
+$stmt2->bind_param("ssis", $date, $pText, $serviceID, $filepath);
+
+$stmt2->execute();
+
+$stmt2->close();
 header('Location: posts.php');
 
 ?>
