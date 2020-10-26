@@ -7,6 +7,7 @@
 </head>
 <body>
     <?php
+    include_once 'search.php';
     include_once 'displayposts.php';
     ?>
 </body>
