@@ -34,5 +34,26 @@
     </table>
         <input type="submit" value="SAVE" name="save_btn">
     </form>
+
+    <?php 
+
+        include_once 'connect.php';
+
+        $btn = $_POST['btn'];
+        $admin = $_POST['admin'];
+
+        if($admin = true){
+
+            echo "<form action='history.php'method='post'>
+                <button>Historik</button>    
+            </form>
+            ";
+
+        }
+        else{
+            
+        }
+    
+    ?>
 </body>
 </html>

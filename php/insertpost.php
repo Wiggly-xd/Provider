@@ -52,6 +52,13 @@ $stmt2->bind_param("i", $dbid);
 $stmt2->execute();
 
 $stmt2->close();
+
+    if($stmt){
+        
+        $stmt3 = "INSERT INTO history(historyText, historyImage, historyDate) VALUES ('$postTitle', '$filepath', '$date')";
+        $rlt = mysqli_query($con, $stmt3);
+
+    }
 ?>
 
 
@@ -99,20 +106,6 @@ else if ($radioVal == "off")
             <div name='namn'>".$res['cName']."</div>
         </div>
         ";
-    }
-
-    $name = $res['cName'];
-    $comment = $res['cText'];
-
-    if($radioVal == "on"){
-
-        echo $comment;
-        echo $name;
-
-    }
-
-    else if($radioVal == "off"){
-        
     }
 
 ?>
