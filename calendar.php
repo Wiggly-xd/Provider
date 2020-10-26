@@ -25,7 +25,6 @@
         $description = '';
         $startDate = '';
         $endDate = '';
-        $dettaärenvariablesominnehållereventID = "";
 
 
         while($ev = mysqli_fetch_array($result)){
@@ -44,7 +43,7 @@
 
         
 
-        $sql = "SELECT eventID, eventTitle FROM event ";
+        $sql = "SELECT * FROM event ";
         $result = mysqli_query($conn, $sql);
 
         echo '<form action="redigerad.php" method="post">';
@@ -55,17 +54,37 @@
     
 
             
-        echo '<option value="' . $rev["eventID"] . '" >'. $rev["eventTitle"] .  $rev["startDate"] . $rev["endDate"] .'</option>';
+        echo '<option value="' . $rev["eventID"] . '" >'. $rev["eventTitle"] .'</option>';
         
         }
         echo '</select>';
     ?>
         <input type="text" name="eventTitle" value="<?php echo $title; ?>"placeholder="Skriv ny titel">
         <input type="text" name="description" value="<?php echo $description; ?>" placeholder="Skriv ny beskrivning">
-        <input type ="date" name=startDate" value="<?php echo $startDate; ?>">
-        <input type ="date" name=endDate" value="<?php echo $endDate; ?>">
+        <input type="date" name="startDate" value="<?php echo $startDate; ?>"placeholder="Skriv ny titel">
+        <input type="date" name="endDate" value="<?php echo $endDate; ?>" placeholder="Skriv ny beskrivning">
         <button type="submit" name="save">Uppdatera</button>
     </form>
+    
+    <?php
+    $sql = "SELECT * FROM event ";
+        $result = mysqli_query($conn, $sql);
 
+        echo '<form action="delete.php" method="post">';
+        echo '<label for="eventTitle">Välj event:</label>';
+        echo '<select id="eventID" name="eventID">';
+        while($rev = mysqli_fetch_array($result)){
+
+    
+
+            
+        echo '<option value="' . $rev["eventID"] . '" >'. $rev["eventTitle"] .'</option>';
+        
+        }
+        echo '</select>';
+
+    ?>
+    <button type="submit" name="delete">Ta bort</button>
+    </form>
 </body>
 </html>

@@ -40,14 +40,14 @@
         echo $row['endDate'];
         echo "</td><td>";
         ?>
-        <a href="../../redigerad.php?id=<?php echo $row['eventID'];?>">Redigera</a>
+        <a href="../../delete.php?id=<?php echo $row['eventID'];?>">Ta bort</a>
         <?php
         echo "</td></tr>";
 
     }
 
 echo "</table>";
-
+        header('location: ../../calendar.php');
     ?>
 
 </body>
