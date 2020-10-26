@@ -21,6 +21,7 @@ $stmt->bind_param("sss", $fornamn, $comments, $date);
 $stmt->execute();
 
 $stmt->close();
+
 ?>
 
 </form>

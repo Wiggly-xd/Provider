@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
-
-
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
 <br>
 
 <?php
@@ -65,6 +68,8 @@ $stmt2->close();
 <?php echo ' ' . "<img src='$filepath'>";
 ?>
 
+
+
 <?php
 $radioVal = $_POST["comment"];
 
@@ -72,6 +77,7 @@ if($radioVal == "on")
 {
     
     echo $button;
+
     
 }
 else if ($radioVal == "off")
@@ -80,8 +86,36 @@ else if ($radioVal == "off")
 }
 ?>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<?php 
 
+    $sql = "SELECT * FROM comment";
+
+    $result = mysqli_query($con, $sql);
+
+
+    while($res = mysqli_fetch_array($result)){
+        echo "<div>
+            <div name='comment'>".$res['cText']."</div>
+            <div name='namn'>".$res['cName']."</div>
+        </div>
+        ";
+    }
+
+    $name = $res['cName'];
+    $comment = $res['cText'];
+
+    if($radioVal == "on"){
+
+        echo $comment;
+        echo $name;
+
+    }
+
+    else if($radioVal == "off"){
+        
+    }
+
+?>
 
 
 
