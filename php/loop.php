@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include_once 'connect.php';
 
 $stmt = 'SELECT serviceID FROM service';

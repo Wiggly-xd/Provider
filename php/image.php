@@ -23,9 +23,9 @@ if($mysqli = mysqli_connect('localhost', 'root', '', 'provider'))
 }
 }
 
-$stmt = $mysqli->prepare("INSERT INTO post (postTitle, pText, postDate, serviceID, pageID, imageURL) VALUES (?, ?, ?, ?, ?, ?)");
+$stmt = $mysqli->prepare("INSERT INTO post (postTitle, pText, postDate, serviceID, pageID, imageURL, username) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
-$stmt->bind_param("sssiis", $postTitle, $pText, $date, $serviceID, $pageID, $filepath);
+$stmt->bind_param("sssiiss", $postTitle, $pText, $date, $serviceID, $pageID, $filepath, $_SESSION['username']);
 
 $stmt->execute();
 

@@ -21,6 +21,12 @@ $qryimgresult = mysqli_fetch_array($imgres);
 
 
 
+$stmt3 = "SELECT user.username FROM user INNER JOIN post WHERE user.userID = post.username";
+
+$usernameres = mysqli_query($mysqli, $stmt3);
+
+$qryusernameresult = mysqli_fetch_array($usernameres);
+
 
 
 while($qryresult = mysqli_fetch_array($res)){
@@ -33,7 +39,20 @@ while($qryresult = mysqli_fetch_array($res)){
     }
 
 
-    echo '<div style="border: 1px solid black; width: 50vw; margin-left:auto; margin-right: auto; padding-left: 1vw;"><h1>' . $qryresult["serviceTitle"] . '</h1><br>' . '<p>Creation date: ' . $qryresult["serviceDate"] . '</p><p>Service Type: ' . $serviceType . '</p><h2>' . $qryresult["postTitle"] . '</h2><br>' . '<p>content: ' . $qryresult["pText"] . '</p><br>' . '<p>Post date: ' . $qryresult["postDate"] . '</p>' . '<br><p>Service ID:' . $qryresult["serviceID"] . '</p><br><img src="' . $qryimgresult["path"] . '" style="width: 40vw; heigth:40vw";><br></div>';
+    echo '<div style="border: 1px solid black; width: 50vw; margin-left:auto; margin-right: auto; padding-left: 1vw;">';
+    echo '<h1>' . $qryresult["serviceTitle"] . '</h1>';
+    echo '<br>';
+    echo '<p>Creation date: ' . $qryresult["serviceDate"] . '</p>';
+    echo '<p>Service Type: ' . $serviceType . '</p>';
+    echo '<h2>' . $qryresult["postTitle"] . '</h2>';
+    echo '<br>';
+    echo '<p>content: ' . $qryresult["pText"] . '</p>';
+    echo '<br>';
+    echo '<p>Post date: ' . $qryresult["postDate"] . '</p>';
+    echo '<br>';
+    echo '<p>Service ID:' . $qryresult["serviceID"] . '</p>';
+    echo '<br>';
+    echo '</div>';
 }
 
 ?>
