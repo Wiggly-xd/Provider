@@ -86,5 +86,65 @@
     ?>
     <button type="submit" name="delete">Ta bort</button>
     </form>
-</body>
+<?php 
+   
+// If the session variable is empty, this  
+// means the user is yet to login 
+// User will be sent to 'login.php' page 
+// to allow the user to login 
+if (!isset($_SESSION['username'])) { 
+    $_SESSION['msg'] = "You have to log in first"; 
+    header('location: login.php'); 
+} 
+   
+// Logout button will destroy the session, and 
+// will unset the session variables 
+// User will be headed to 'login.php' 
+// after loggin out 
+if (isset($_GET['logout'])) { 
+    session_destroy(); 
+    unset($_SESSION['username']); 
+    header("location: login.php"); 
+} 
+?> 
+    <div class="content"> 
+   
+        <!-- Creating notification when the 
+                user logs in -->
+          
+        <!-- Accessible only to the users that 
+                have logged in already -->
+        <?php if (isset($_SESSION['success'])) : ?> 
+            <div class="error success" > 
+                <h3> 
+                    <?php
+                        echo $_SESSION['success'];  
+                        unset($_SESSION['success']); 
+                    ?> 
+                </h3> 
+            </div> 
+        <?php endif ?> 
+   
+        <!-- information of the user logged in -->
+        <!-- welcome message for the logged in user -->
+        <?php  if (isset($_SESSION['username'])) : ?> 
+            <p> 
+                Welcome  
+                <strong> 
+                    <?php echo $_SESSION['username']; ?> 
+                </strong> 
+            </p> 
+            <p>  
+                <a href="calendar.php?logout='1'" style="color: red;"> 
+                    Click here to Logout 
+                </a> 
+            </p> 
+        <?php endif ?> 
+    </div> 
+    <?php
+    $cookie_name = "user";
+    $cookie_value = $_SESSION['username'];
+    setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+    ?>
+</body> 
 </html>
