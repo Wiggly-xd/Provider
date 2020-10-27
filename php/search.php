@@ -2,10 +2,10 @@
 <!DOCTYPE HTML>
 <html>
 
-<center><h2>Sök efter blogg/wiki</h2></center>
+<center><h2>sök blogg</h2></center>
 <form action = "display.php" method="get">
 <br>
-<center>
+<center>Sök efter blogg
 <input type="text" name="search" size="48">
 <br></br>
 <input type="submit" value="submit">
