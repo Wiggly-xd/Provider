@@ -27,8 +27,15 @@
         <input type="submit" value="Submit" name="btn">
     </form>
 
-    <form action="historik.php" method="post" type="hidden">
-        <button>Historik</button>
-    </form>
+    
+    <?php
+    
+        if($_SESSION['admin'] == 1){
+          echo   "<form action='historik.php' method='post'>
+                <button>Historik</button>
+            </form>";
+        }
+
+    ?>
 </body>
 </html>
