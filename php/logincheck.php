@@ -33,7 +33,10 @@ $stmt->execute();
 $exist = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
 if ($exist) {
-header('Location: pagemaker.html');
+$_SESSION['loggedin'] = true;
+$_SESSION['username'] = $username;
+$_SESSION['admin'] = $admin;
+header('Location: pagemaker.php');
 exit();
 }
 else {

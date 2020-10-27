@@ -6,6 +6,14 @@
     <title>Document</title>
 </head>
 <body>
+    <?php
+    session_start();
+    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+        echo "<p>logged in as: " . $_SESSION['username'] . "!";
+    } else {
+        header('Location: login.html');
+    }
+    ?>
     <form action="pagecheck.php" method="post" class="form">
         <p>title</p>
         <input type="text" name="serviceTitle" placeholder="title" required="required">
