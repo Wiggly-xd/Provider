@@ -12,9 +12,9 @@
 
 <form action="insertpost.php" method="post" enctype="multipart/form-data">
 <tr><td>BLOGGTITEL</td>
-<td> <input type="text" required name="postTitle"></td>
+<td> <input type="text" name="postTitle" required="required"></td>
 </tr>
-<textarea id="textbox" type="text" required name="pText" rows="10" cols="40">
+<textarea id="textbox" type="text" name="pText" rows="10" cols="40" required="required">
 </textarea>
     <h2></h2>
     <table>
