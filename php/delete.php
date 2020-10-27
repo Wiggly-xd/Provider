@@ -22,6 +22,13 @@ $stmt2->execute();
 
 $stmt2->close();
 
-header('Location: posts.php');
+if($stmt){
+        
+    $stmt3 = "INSERT INTO history(historyText, historyImage, historyDate) VALUES ('$postTitle', '$filepath', '$date')";
+    mysqli_query($con, $stmt3);
+
+}
+
+header('Location: display.php');
 
 ?>
