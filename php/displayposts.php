@@ -13,7 +13,7 @@ $stmt = 'SELECT * FROM service, spage, post WHERE service.serviceID = post.servi
 
 $res = mysqli_query($mysqli, $stmt);
 
-$stmt2 = 'SELECT path FROM image';
+$stmt2 = "SELECT path FROM image";
 
 $imgres = mysqli_query($mysqli, $stmt2);
 
@@ -33,7 +33,7 @@ while($qryresult = mysqli_fetch_array($res)){
     }
 
 
-    echo '<div style="border: 1px solid black; width: 50vw; margin-left:auto; margin-right: auto; padding-left: 1vw;"><h1>' . $qryresult["serviceTitle"] . '</h1><br>' . '<p>Creation date: ' . $qryresult["serviceDate"] . '</p><p>Service Type: ' . $serviceType . '</p><h2>' . $qryresult["postTitle"] . '</h2><br>' . '<p>content: ' . $qryresult["pText"] . '</p><br>' . '<p>Post date: ' . $qryresult["postDate"] . '</p>' . '<br><p>Service ID:' . $qryresult["serviceID"] . '</p><br><img src="' . $qryimgresult["path"] . '"><br></div>';
+    echo '<div style="border: 1px solid black; width: 50vw; margin-left:auto; margin-right: auto; padding-left: 1vw;"><h1>' . $qryresult["serviceTitle"] . '</h1><br>' . '<p>Creation date: ' . $qryresult["serviceDate"] . '</p><p>Service Type: ' . $serviceType . '</p><h2>' . $qryresult["postTitle"] . '</h2><br>' . '<p>content: ' . $qryresult["pText"] . '</p><br>' . '<p>Post date: ' . $qryresult["postDate"] . '</p>' . '<br><p>Service ID:' . $qryresult["serviceID"] . '</p><br><img src="' . $qryimgresult["path"] . '" style="width: 40vw; heigth:40vw";><br></div>';
 }
 
 ?>
