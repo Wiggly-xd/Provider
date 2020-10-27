@@ -31,6 +31,13 @@ $stmt->execute();
 
 $stmt->close();
 
+if($stmt){
+        
+    $stmt3 = "INSERT INTO history(historyText, historyImage, historyDate) VALUES ('$postTitle', '$filepath', '$date')";
+    $rlt = mysqli_query($con, $stmt3);
+
+}
+
 header('Location: posts.php');
 
 ?>

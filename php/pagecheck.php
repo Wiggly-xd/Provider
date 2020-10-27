@@ -5,6 +5,7 @@ include_once 'connect.php';
 $serviceTitle = $_POST['serviceTitle'];
 $sDate = date("Y-m-d");
 $serviceType = $_POST['serviceType'];
+$serviceType2 = $_POST['serviceType2'];
 $serviceID = $_POST['serviceID'];
 
 $stmt1 = $mysqli->prepare("INSERT INTO spage (serviceType, serviceID) VALUES (?, ?)");
@@ -25,6 +26,11 @@ $stmt2->execute();
 
 $stmt2->close();
 
-header('Location: postmaker.php?pageID='.$pageID);
+if($_POST['serviceType'] == 1){
+    header('Location: postmaker.php?pageID='.$pageID);
+}
+elseif($_POST['serviceType'] == 0){
+    header('location: post.php?pageID='.$pageID);
+}
 
 ?>
