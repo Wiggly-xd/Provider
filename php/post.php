@@ -9,6 +9,17 @@
     
 </style>
 
+<?php
+
+session_start();
+    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+        echo "<p>logged in as: " . $_SESSION['username'] . "!";
+    } else {
+        header('Location: login.html');
+    }
+
+?>
+
 
 <form action="insertpost.php" method="post" enctype="multipart/form-data">
 <tr><td>BLOGGTITEL</td>
