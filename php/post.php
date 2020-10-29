@@ -2,13 +2,7 @@
 <html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
-
-<style>
-    <?php include_once 'style.css'; 
-    ?>
-    
-</style>
-
+<link href="style.css" rel="stylesheet" />
 
 <form action="insertpost.php" method="post" enctype="multipart/form-data">
 <tr><td>BLOGGTITEL</td>
