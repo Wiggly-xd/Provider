@@ -1,34 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body>
+
 <?php
-session_start();
-include_once 'connect.php';
 
-$serviceID = $_SESSION['serviceID'];
+include("dbconn.php");
 
-$stmt = $mysqli->prepare("DELETE FROM service WHERE serviceID='$serviceID'");
 
-$stmt->execute();
+$postTitle = $_GET['rn'];
+$query = "DELETE FROM post WHERE postTitle = '$postTitle'";
 
-$stmt->close();
+$data = mysqli_query($db,$query);
 
-$stmt1 = $mysqli->prepare("DELETE FROM spage WHERE serviceID='$serviceID'");
-
-$stmt1->execute();
-
-$stmt1->close();
-
-$stmt2 = $mysqli->prepare("DELETE FROM post WHERE serviceID='$serviceID'");
-
-$stmt2->execute();
-
-$stmt2->close();
-
-if($stmt){
-        
-    $stmt3 = "INSERT INTO history(historyText, historyImage, historyDate) VALUES ('$postTitle', '$filepath', '$date')";
-    mysqli_query($con, $stmt3);
-
+if($data)
+{
+   echo "Godkänd";
+}
+else{
+    echo "icke godkänd";
 }
 
-header('Location: display.php');
+if($query){
 
+    $sql = "INSERT INTO history(historyText) VALUES('$postTitle')";
+    mysqli_query($db, $sql);
+
+}
 ?>
+<a href="search.php">Sök</a>
+</body>
+</html>

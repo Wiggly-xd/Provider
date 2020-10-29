@@ -104,6 +104,7 @@ else if ($radioVal == "off")
         echo "<div>
             <div name='comment'>".$res['cText']."</div>
             <div name='namn'>".$res['cName']."</div>
+            <div name='tabort'><a href='deletecomment.php?rn=$res[commentID]'>Ta bort</a></div>
         </div>
         ";
     }
