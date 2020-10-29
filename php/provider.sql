@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Värd: 127.0.0.1
--- Tid vid skapande: 23 okt 2020 kl 14:24
--- Serverversion: 10.4.11-MariaDB
--- PHP-version: 7.2.29
+-- Tid vid skapande: 29 okt 2020 kl 10:59
+-- Serverversion: 10.4.14-MariaDB
+-- PHP-version: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -21,16 +21,6 @@ SET time_zone = "+00:00";
 -- Databas: `provider`
 --
 
-DELIMITER $$
---
--- Procedurer
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `imageInsert` (IN `getName` VARCHAR(100), IN `getPath` VARCHAR(200), IN `getType` VARCHAR(100))  BEGIN
-INSERT INTO image (name,path,type) VALUES (getName,getPath,getType);
-END$$
-
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -40,8 +30,17 @@ DELIMITER ;
 CREATE TABLE `comment` (
   `commentID` int(11) NOT NULL,
   `cText` text NOT NULL,
-  `cDate` varchar(255) NOT NULL
+  `cDate` varchar(255) NOT NULL,
+  `pageID` int(11) NOT NULL COMMENT 'foreign_key'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumpning av Data i tabell `comment`
+--
+
+INSERT INTO `comment` (`commentID`, `cText`, `cDate`, `pageID`) VALUES
+(9, 'yes', 'October 29, 2020, 9:50 am', 5),
+(11, 'lmaonoob', 'October 29, 2020, 9:57 am', 7);
 
 -- --------------------------------------------------------
 
@@ -78,18 +77,19 @@ CREATE TABLE `history` (
 --
 
 CREATE TABLE `image` (
-  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `path` varchar(255) NOT NULL,
-  `type` varchar(255) NOT NULL
+  `type` varchar(255) NOT NULL,
+  `serviceID` int(11) NOT NULL COMMENT 'foreign_key'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumpning av Data i tabell `image`
 --
 
-INSERT INTO `image` (`id`, `name`, `path`, `type`) VALUES
-(2, 'marsvin.jpg', 'bilder/marsvin.jpg', 'image/jpeg');
+INSERT INTO `image` (`name`, `path`, `type`, `serviceID`) VALUES
+('kim.jpg', 'bilder/kim.jpg', 'image/jpeg', 1),
+('marsvin.jpg', 'bilder/marsvin.jpg', 'image/jpeg', 2);
 
 -- --------------------------------------------------------
 
@@ -99,22 +99,23 @@ INSERT INTO `image` (`id`, `name`, `path`, `type`) VALUES
 
 CREATE TABLE `post` (
   `postID` int(11) NOT NULL,
-  `postType` tinyint(4) NOT NULL,
   `pText` text NOT NULL,
   `lastUpdate` varchar(255) NOT NULL,
   `postDate` varchar(255) NOT NULL,
   `imageURL` varchar(255) DEFAULT NULL,
   `postTitle` varchar(255) NOT NULL,
   `pageID` int(11) NOT NULL,
-  `serviceID` int(11) NOT NULL COMMENT 'foreign_key'
+  `serviceID` int(11) NOT NULL COMMENT 'foreign_key',
+  `username` varchar(255) NOT NULL COMMENT 'foreign_key'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumpning av Data i tabell `post`
 --
 
-INSERT INTO `post` (`postID`, `postType`, `pText`, `lastUpdate`, `postDate`, `imageURL`, `postTitle`, `pageID`, `serviceID`) VALUES
-(32, 0, 'En marsvinshona är brunstig ungefär var femtonde dag och dräktig i omkring 70 dygn. Riskerna under dräktighet och förlossning ökar med åldern. Det rekommenderas att honan är minst sju månader när hon får sin första kull, gärna runt nio-tio månader men hon bör få sin första kull under första levnadsåret. Hanen kan gå tillsammans med honan i ungefär fem veckor men han ska skiljas från honan före förlossningen annars kommer han att para sig med honan direkt efter, vilket kan äventyra honans hälsa och liv. Hon behöver vila efter varje kull och bör inte få fler än två kullar per år. Toxicos (havandeskapsförgiftning) är en relativt vanlig komplikation vid marsvinsuppfödning varför honan inte bör utsättas för stress under dräktigheten. Om honan utvecklar toxicos är det i princip omöjligt att häva tillståndet och det slutar oftast att honan och hennes oftast ofödda ungar dör.', '', '2020-10-22', 'bilder/marsvin.jpg', 'Parning', 43, 1);
+INSERT INTO `post` (`postID`, `pText`, `lastUpdate`, `postDate`, `imageURL`, `postTitle`, `pageID`, `serviceID`, `username`) VALUES
+(9, 'cool', '', '2020-10-29', 'bilder/kim.jpg', 'wow', 5, 1, 'nj'),
+(11, 'weeewo', '', '2020-10-29', 'bilder/marsvin.jpg', 'testermanbigwow', 7, 2, 'nj');
 
 -- --------------------------------------------------------
 
@@ -133,7 +134,9 @@ CREATE TABLE `privilege` (
 --
 
 INSERT INTO `privilege` (`moderator`, `admin`, `userID`) VALUES
-(1, 1, 3);
+(1, 1, 5),
+(0, 0, 6),
+(1, 1, 7);
 
 -- --------------------------------------------------------
 
@@ -152,7 +155,8 @@ CREATE TABLE `service` (
 --
 
 INSERT INTO `service` (`serviceID`, `serviceDate`, `serviceTitle`) VALUES
-(1, '2020-10-22', 'Marsvin');
+(1, '2020-10-29', 'test'),
+(2, '2020-10-29', 'testnr2');
 
 -- --------------------------------------------------------
 
@@ -171,17 +175,8 @@ CREATE TABLE `spage` (
 --
 
 INSERT INTO `spage` (`pageID`, `serviceType`, `serviceID`) VALUES
-(43, 1, 1);
-
--- --------------------------------------------------------
-
---
--- Tabellstruktur `type`
---
-
-CREATE TABLE `type` (
-  `typeID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+(5, 1, 1),
+(7, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -203,7 +198,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userID`, `username`, `password`, `firstName`, `middleName`, `lastName`) VALUES
-(3, 'nj', '123', 'Niklas', '', 'Jörgensen');
+(5, 'wiggly', '123', 'Noah', 'noob', 'Richardson'),
+(6, 'elGustapo', '123', 'Gustav', 'test', 'idk'),
+(7, 'nj', '123', 'Niklas', '', 'Jörgensen');
 
 --
 -- Index för dumpade tabeller
@@ -226,12 +223,6 @@ ALTER TABLE `event`
 --
 ALTER TABLE `history`
   ADD PRIMARY KEY (`historyID`);
-
---
--- Index för tabell `image`
---
-ALTER TABLE `image`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Index för tabell `post`
@@ -258,12 +249,6 @@ ALTER TABLE `spage`
   ADD PRIMARY KEY (`pageID`);
 
 --
--- Index för tabell `type`
---
-ALTER TABLE `type`
-  ADD PRIMARY KEY (`typeID`);
-
---
 -- Index för tabell `user`
 --
 ALTER TABLE `user`
@@ -277,7 +262,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT för tabell `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `commentID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `commentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT för tabell `event`
@@ -292,40 +277,28 @@ ALTER TABLE `history`
   MODIFY `historyID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT för tabell `image`
---
-ALTER TABLE `image`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT för tabell `post`
 --
 ALTER TABLE `post`
-  MODIFY `postID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `postID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT för tabell `privilege`
 --
 ALTER TABLE `privilege`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT för tabell `spage`
 --
 ALTER TABLE `spage`
-  MODIFY `pageID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
-
---
--- AUTO_INCREMENT för tabell `type`
---
-ALTER TABLE `type`
-  MODIFY `typeID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `pageID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT för tabell `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
