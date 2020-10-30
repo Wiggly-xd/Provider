@@ -1,14 +1,18 @@
 <?php
 include("dbconn.php");
 
+session_start();
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+    echo "<p>logged in as: " . $_SESSION['username'] . "!";
+} else {
+    header('Location: login.html');
+}
+
 
 $search = $_REQUEST["search"];
 
 $query = "SELECT * FROM post WHERE postTitle LIKE '%$search%'"; //sök efter bok
 $result = mysqli_query($db,$query);
-
-
-
 
 
 
@@ -33,9 +37,9 @@ echo "<tr>
 ";
     }// end while loop
 
-echo 
-'<form action="updatera.php" method="post">
-    <input type="text" placeholder="Ny titel" name="postTitle">
+echo '<form action="updatera.php" method="post">';
+    include_once "loop.php";
+echo '<input type="text" placeholder="Ny titel" name="postTitle">
     <input type="text" placeholder="Ny text" name="pText">
     <?php
     include_once "postID.php";
@@ -47,5 +51,5 @@ echo
 <input type="checkbox" name="postDate"> Datum
 <input type="checkbox" name="postType"> Typ
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="test.js"></script>'
+<script type="text/javascript" src="test.js"></script>';
 ?>

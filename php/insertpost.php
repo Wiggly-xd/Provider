@@ -118,7 +118,7 @@ else if ($radioVal == "off")
         if($_SESSION['admin'] == 1){
             echo "<div name='tabort'><a href='deletecomment.php?rn=$res[commentID]'>Ta bort</a></div>";
         }
-        if($_SESSION['moderator'] == 1){
+        elseif($_SESSION['moderator'] == 1){
             echo "<div name='tabort'><a href='deletecomment.php?rn=$res[commentID]'>Ta bort</a></div>";
         }
     }

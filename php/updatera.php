@@ -7,7 +7,7 @@
 include("dbconn.php");
 
 
-$postID = $_POST['postID'];
+$serviceID = $_POST['serviceID'];
 $postTitle = $_POST['postTitle'];
 $postDate = date("Y-m-d");
 $pText = $_POST['pText'];
@@ -15,10 +15,9 @@ $pText = $_POST['pText'];
 
 
 
-if(isset($postID)){
    
 
-    $sql = "UPDATE post SET postTitle='$postTitle', postDate = '$postDate', pText ='$pText' WHERE postID= $postID";
+    $sql = "UPDATE post SET postTitle='$postTitle', postDate = '$postDate', pText ='$pText' WHERE serviceID= $serviceID";
     mysqli_query($db,$sql);
 
         
@@ -30,7 +29,6 @@ if(isset($postID)){
     
     </form>";
 
-}
     header('location: display.php');
 
 
