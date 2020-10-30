@@ -22,8 +22,8 @@
         echo "Slutdatum kan inte vara mindre än startdatum" . mysqli_error($conn);
     } else{
 
-        $sql = "INSERT INTO event(eventTitle,description,startDate,endDate) VALUES('$_POST[eventTitle]', '$_POST[description]', '$_POST[startDate]', '$_POST[endDate]')";
-    header('location:calendar2.php');
+        $sql = "INSERT INTO event(eventTitle,description,startDate,endDate,userID) VALUES('$_POST[eventTitle]', '$_POST[description]', '$_POST[startDate]', '$_POST[endDate]', '$_POST[id]')";
+    header('location:../../calendar.php');
     if (mysqli_query($conn, $sql)){
     } else{
         echo "ERROR: Was not able to execute $sql. " . mysqli_error($conn);

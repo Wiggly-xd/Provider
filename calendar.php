@@ -6,87 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-
-    <form action="kalender/test/index.php">
-
-        <button>Lägg till event</button>
-
-    </form>
     
-    <?php
-
-        include_once 'connect.php';
-
-        $sql = "SELECT * FROM event";
-
-        $result = mysqli_query($conn, $sql);
-
-        $title = '';
-        $description = '';
-        $startDate = '';
-        $endDate = '';
-
-
-        while($ev = mysqli_fetch_array($result)){
-            echo "<div>
-                    <div>".$ev['eventTitle']."</div>
-                    <div>".$ev['description']."</div>
-                    <div>".$ev['startDate']."</div>
-                    <div>".$ev['endDate']."</div>
-                </div>
-                ";
-        }
-    ?>
-    <?php
-        session_start();
-        include_once 'connect.php';
-
-        
-
-        $sql = "SELECT * FROM event ";
-        $result = mysqli_query($conn, $sql);
-
-        echo '<form action="redigerad.php" method="post">';
-        echo '<label for="eventTitle">Välj event:</label>';
-        echo '<select id="eventID" name="eventID">';
-        while($rev = mysqli_fetch_array($result)){
-
-    
-
-            
-        echo '<option value="' . $rev["eventID"] . '" >'. $rev["eventTitle"] .'</option>';
-        
-        }
-        echo '</select>';
-    ?>
-        <input type="text" name="eventTitle" value="<?php echo $title; ?>"placeholder="Skriv ny titel">
-        <input type="text" name="description" value="<?php echo $description; ?>" placeholder="Skriv ny beskrivning">
-        <input type="date" name="startDate" value="<?php echo $startDate; ?>"placeholder="Skriv ny titel">
-        <input type="date" name="endDate" value="<?php echo $endDate; ?>" placeholder="Skriv ny beskrivning">
-        <button type="submit" name="save">Uppdatera</button>
-    </form>
-    
-    <?php
-    $sql = "SELECT * FROM event ";
-        $result = mysqli_query($conn, $sql);
-
-        echo '<form action="delete.php" method="post">';
-        echo '<label for="eventTitle">Välj event:</label>';
-        echo '<select id="eventID" name="eventID">';
-        while($rev = mysqli_fetch_array($result)){
-
-    
-
-            
-        echo '<option value="' . $rev["eventID"] . '" >'. $rev["eventTitle"] .'</option>';
-        
-        }
-        echo '</select>';
-
-    ?>
-    <button type="submit" name="delete">Ta bort</button>
-    </form>
 <?php 
+
+    session_start();
+    include_once 'connect.php';
    
 // If the session variable is empty, this  
 // means the user is yet to login 
@@ -136,15 +60,129 @@ if (isset($_GET['logout'])) {
             </p> 
             <p>  
                 <a href="calendar.php?logout='1'" style="color: red;"> 
-                    Click here to Logout 
+                    Logga ut 
                 </a> 
             </p> 
         <?php endif ?> 
     </div> 
+    
+    <form action="kalender/test/index.php">
+
+        <button>Lägg till event</button>
+
+    </form>
+
     <?php
-    $cookie_name = "user";
-    $cookie_value = $_SESSION['username'];
-    setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+        $userID = $_SESSION['id'];
+        $sql = "SELECT * FROM event where userID = $userID";
+        
+        $result = mysqli_query($conn, $sql);
+
+        $title = '';
+        $description = '';
+        $startDate = '';
+        $endDate = '';
+
+        while($ev = mysqli_fetch_array($result)){
+
+            echo "<div>
+                    <div>".$ev['eventTitle']."</div>
+                    <div>".$ev['description']."</div>
+                    <div>".$ev['startDate']."</div>
+                    <div>".$ev['endDate']."</div>
+                </div>
+                ";
+        }
+
+        $userID = $_SESSION['id'];
+        $sql2 = "SELECT * FROM event where inviteID = $userID";
+        
+        $res = mysqli_query($conn, $sql2);
+
+        $title = '';
+        $description = '';
+        $startDate = '';
+        $endDate = '';
+
+        while($ev = mysqli_fetch_array($res)){
+            echo "<div>
+                    <div>".$ev['eventTitle']."</div>
+                    <div>".$ev['description']."</div>
+                    <div>".$ev['startDate']."</div>
+                    <div>".$ev['endDate']."</div>
+                </div>
+                ";
+        }
+        
+        $sql = "SELECT * FROM event where userID = $userID";
+        $result = mysqli_query($conn, $sql);
+
+        echo '<form action="redigerad.php" method="post">';
+        echo '<label for="eventTitle">Välj event:</label>';
+        echo '<select id="eventID" name="eventID">';
+        while($rev = mysqli_fetch_array($result)){
+  
+        echo '<option value="' . $rev["eventID"] . '" >'. $rev["eventTitle"] .'</option>';
+        
+        }
+        echo '</select>';
     ?>
+        <input type="text" name="eventTitle" value="<?php echo $title; ?>"placeholder="Skriv ny titel">
+        <input type="text" name="description" value="<?php echo $description; ?>" placeholder="Skriv ny beskrivning">
+        <input type="date" name="startDate" value="<?php echo $startDate; ?>">
+        <input type="date" name="endDate" value="<?php echo $endDate; ?>">
+        <button type="submit" name="save">Uppdatera</button>
+    </form>
+    
+    <?php
+    $sql = "SELECT * FROM event where userID = $userID";
+        $result = mysqli_query($conn, $sql);
+
+        echo '<form action="delete.php" method="post">';
+        echo '<label for="eventTitle">Välj event:</label>';
+        echo '<select id="eventID" name="eventID">';
+        while($rev = mysqli_fetch_array($result)){
+ 
+        echo '<option value="' . $rev["eventID"] . '" >'. $rev["eventTitle"] .'</option>';
+        
+        }
+        echo '</select>';
+        
+    ?>
+    <button type="submit" name="delete">Ta bort</button>
+    </form>
+    <?php
+    $inviteID = $_SESSION['id'];
+    $userID = $inviteID;
+    $sql = "SELECT * FROM event where userID = $userID";
+        $result = mysqli_query($conn, $sql);
+
+        echo '<form action="bjudin.php" method="post">';
+        echo '<label for="eventTitle">Välj event:</label>';
+        echo '<select id="eventID" name="eventID">';
+        while($rev = mysqli_fetch_array($result)){
+
+        echo '<option value="' . $rev["eventID"] . '" >'. $rev["eventTitle"] .'</option>';
+        
+        }
+        echo '</select>';
+        
+    ?>
+    <input type="text" name="userID" placeholder="Skriv in användare">
+    <button type="submit" name="bjudin">Bjud in</button>
+    </form>
+    <button onclick="myFunction()">Inbjudningar</button>
+    <p id="demo"></p>
+    <script>
+    function myFunction(){
+        var txt = <?php echo json_encode($sql2); ?>;
+        if (confirm("Vill du acceptera")){
+            txt = txt;
+        } else{
+            txt = "Du tackade nej";
+        }
+        document.getElementById("demo").innerHTML = txt;
+    }
+    </script>
 </body> 
 </html>

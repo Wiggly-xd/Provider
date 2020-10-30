@@ -27,9 +27,6 @@
 
     header('location:calendar.php');
 
-    
-
-
 ?>
 </body>
 </html>
