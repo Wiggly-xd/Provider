@@ -22,6 +22,4 @@ $stmt->execute();
 
 header('Location: login.html');
 
-
-
 ?>

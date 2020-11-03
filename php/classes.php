@@ -1,7 +1,5 @@
 <?php
 
-include_once 'connect.php';
-
 class Account {
     private $username;
     private $password;
