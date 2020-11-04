@@ -7,10 +7,10 @@ Class Service{
 
     //Service Properties
     public $serviceID;
-    public $serviceDate;
     public $serviceTitle;
     public $serviceType;
-    public $userID;
+    public $publish;
+
     //Constructor with db
     public function __construct($db){
         $this->conn = $db;
@@ -21,8 +21,9 @@ Class Service{
         $query = 'INSERT INTO ' . $this->table . '
         SET
         serviceID = :serviceID,
-        serviceDate = :serviceDate,
+        serviceDate = CURDATE(),
         serviceTitle = :serviceTitle,
+        publish = :publish,
         serviceType = :serviceType';
 
             //Preparing statement
@@ -30,15 +31,15 @@ Class Service{
 
             //Clean data
             $this->serviceID =htmlspecialchars(strip_tags($this->serviceID));
-            $this->serviceDate =htmlspecialchars(strip_tags($this->serviceDate));
             $this->serviceTitle =htmlspecialchars(strip_tags($this->serviceTitle));
             $this->serviceType =htmlspecialchars(strip_tags($this->serviceType));
+            $this->publish =htmlspecialchars(strip_tags($this->publish));
 
             //Bind data
             $stmt->bindParam(':serviceID', $this->serviceID);
-            $stmt->bindParam(':serviceDate', $this->serviceDate);
             $stmt->bindParam(':serviceTitle', $this->serviceTitle);
             $stmt->bindParam(':serviceType', $this->serviceType);
+            $stmt->bindParam(':publish', $this->publish);
 
             //Executing query
             if($stmt->execute()){
@@ -50,24 +51,89 @@ Class Service{
             return false;
     }
 
-        public function service_verify(){
+    public function read_service(){
+        //Create query
+        $query = 'SELECT * FROM post, service WHERE post.serviceID = service.serviceID AND service.publish = 1';
+        //Preparing statement
+        $stmt = $this->conn->prepare($query);
+        //Executing query
+        $stmt->execute();
+
+        return $stmt;
+    }
+    
+    //Get Single service
+    public function search_service(){
+        $query = 'SELECT * FROM service, post, spage WHERE service.serviceID=? AND post.serviceID = spage.serviceID AND service.publish = 1';
+        //Preparing statement
+        $stmt = $this->conn->prepare($query);
+
+        //Binding pageID
+        $stmt->bindParam(1, $this->serviceID);
+
+        //Executing query
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        //Setting properties
+        $this->serviceTitle = $row['serviceTitle'];
+        $this->serviceDate = $row['serviceDate'];
+        $this->serviceID = $row['serviceID'];
+        $this->serviceType = $row['serviceType'];
+        $this->publish = $row['publish'];
+    }
+
+    //Verify service
+    public function service_verify(){
             
-            $query = 'SELECT userID, serviceType FROM '. $this->table. ' WHERE userID = ? ';
-            //Preparing statement
-            $stmt = $this->conn->prepare($query);
-        
-            //Binding pageID
-            $stmt->bindParam(1, $this->userID);
-        
-            //Executing query
-            $stmt->execute();
-        
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-            //Setting properties
-            $this->serviceType = $row['serviceType'];
-            $this->userID = $row['userID'];
-        }
+        $query = 'SELECT userID, serviceType FROM '. $this->table. ' WHERE userID = ? ';
+        //Preparing statement
+        $stmt = $this->conn->prepare($query);
+    
+        //Binding userID
+        $stmt->bindParam(1, $this->userID);
+    
+        //Executing query
+        $stmt->execute();
+    
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        //Setting properties
+        $this->serviceType = $row['serviceType'];
+        $this->userID = $row['userID'];
+    }
+    
+
+}
+
+//Service history
+Class Service_history{
+    //DB Stuff
+    private $conn;
+    private $table = 'service';
+
+    //Service Properties
+    public $serviceID;
+    public $serviceDate;
+    public $serviceTitle;
+
+
+    //Constructor with db
+    public function __construct($db){
+        $this->conn = $db;
+    }
+
+    public function read_service_history(){
+        //Create query
+        $query = 'SELECT * FROM service';
+        //Preparing statement
+        $stmt = $this->conn->prepare($query);
+        //Executing query
+        $stmt->execute();
+
+        return $stmt;
+    }
 
 }
 

@@ -2,37 +2,37 @@
 //Headers
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Methods: PUT');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods,Authorization,X-Requested-With');
 
 include_once '../../config/Database.php';
-include_once '../../models/Post.php';
+include_once '../../models/event.php';
 
 //Instantiate DB & connect
 $database = new Database();
 $db = $database->connect();
 
-//Instantiate post object
-$post = new Post($db);
+//Instantiate event object
+$event = new Event($db);
 
 //Get raw posted data
 $data = json_decode(file_get_contents("php://input"));
 
-$post->postTitle = $data->postTitle;
-$post->pText = $data->pText;
-$post->postDate = $data->postDate;
-$post->username = $data->username;
-$post->pageID = $data->pageID;
-$post->imageURL = $data->imageURL;
-$post->serviceID = $data->serviceID;
+//Set eventID to UPDATE
+$event->startDate = $data->startDate;
+$event->eventTitle = $data->eventTitle;
+$event->description = $data->description;
+$event->endDate = $data->endDate;
+$event->userID = $data->userID;
+$event->inviteID = $data->inviteID;
 
-//Create post
-if($post->create_post()){
+//Update event
+if($event->update_event()){
     echo json_encode(
-        array('message' => 'Post Created')
+        array('message' => 'event Updated')
     );
 }else{
     echo json_encode(
-        array('message' => 'Post Not Created')
+        array('message' => 'event Not Updated')
     );
 }

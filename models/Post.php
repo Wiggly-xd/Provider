@@ -13,47 +13,15 @@ Class Post{
     public $imageURL;
     public $postTitle;
     public $pageID;
-    public $serviceID;
     public $username;
+    public $serviceTitle;
+    public $serviceDate;
+    public $serviceID;
     public $serviceType;
 
     //Constructor with db
     public function __construct($db){
         $this->conn = $db;
-    }
-
-    public function read_post(){
-        //Create query
-        $query = 'SELECT * FROM post, service WHERE post.serviceID = service.serviceID';
-        //Preparing statement
-        $stmt = $this->conn->prepare($query);
-        //Executing query
-        $stmt->execute();
-
-        return $stmt;
-    }
-    
-    //Get Single Post
-    public function read_single_post(){
-        $query = 'SELECT * FROM post, service WHERE post.pageID = ? AND post.serviceID = service.serviceID';
-        //Preparing statement
-        $stmt = $this->conn->prepare($query);
-
-        //Binding pageID
-        $stmt->bindParam(1, $this->pageID);
-
-        //Executing query
-        $stmt->execute();
-
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        //Setting properties
-        $this->postTitle = $row['postTitle'];
-        $this->pText = $row['pText'];
-        $this->postDate = $row['postDate'];
-        $this->username = $row['username'];
-        $this->serviceType = $row['serviceType'];
-        $this->pageID = $row['pageID'];
     }
 
     //Create post
@@ -64,6 +32,7 @@ Class Post{
             postTitle = :postTitle,
             pText = :pText,
             postDate = :postDate,
+            lastUpdate = :lastUpdate,
             username = :username,
             pageID = :pageID,
             imageURL = :imageURL,
@@ -76,6 +45,7 @@ Class Post{
             $this->postTitle =htmlspecialchars(strip_tags($this->postTitle));
             $this->pText =htmlspecialchars(strip_tags($this->pText));
             $this->postDate =htmlspecialchars(strip_tags($this->postDate));
+            $this->lastUpdate =htmlspecialchars(strip_tags($this->lastUpdate));
             $this->username =htmlspecialchars(strip_tags($this->username));
             $this->pageID =htmlspecialchars(strip_tags($this->pageID));
             $this->imageURL =htmlspecialchars(strip_tags($this->imageURL));
@@ -85,6 +55,7 @@ Class Post{
             $stmt->bindParam(':postTitle', $this->postTitle);
             $stmt->bindParam(':pText', $this->pText);
             $stmt->bindParam(':postDate', $this->postDate);
+            $stmt->bindParam(':lastUpdate', $this->lastUpdate);
             $stmt->bindParam(':username', $this->username);
             $stmt->bindParam(':pageID', $this->pageID);
             $stmt->bindParam(':imageURL', $this->imageURL);
@@ -101,15 +72,15 @@ Class Post{
     }
 
         //Update post
-        public function update(){
+        public function update_post(){
             //Update query
             $query = 'UPDATE ' . $this->table . '
             SET
                 postTitle = :postTitle,
                 pText = :pText,
+                lastUpdate = :lastUpdate,
                 postDate = :postDate,
-                username = :username,
-                pageID = :pageID
+                username = :username
             WHERE
                 pageID = :pageID';
     
@@ -120,6 +91,7 @@ Class Post{
                 $this->postTitle =htmlspecialchars(strip_tags($this->postTitle));
                 $this->pText =htmlspecialchars(strip_tags($this->pText));
                 $this->postDate =htmlspecialchars(strip_tags($this->postDate));
+                $this->lastUpdate =htmlspecialchars(strip_tags($this->lastUpdate));
                 $this->username =htmlspecialchars(strip_tags($this->username));
                 $this->pageID =htmlspecialchars(strip_tags($this->pageID));
     
@@ -127,6 +99,7 @@ Class Post{
                 $stmt->bindParam(':postTitle', $this->postTitle);
                 $stmt->bindParam(':pText', $this->pText);
                 $stmt->bindParam(':postDate', $this->postDate);
+                $stmt->bindParam(':lastUpdate', $this->lastUpdate);
                 $stmt->bindParam(':username', $this->username);
                 $stmt->bindParam(':pageID', $this->pageID);
     
@@ -164,6 +137,42 @@ Class Post{
             printf("Error: %s.\n", $stmt->error);
             return false;
         }
+
+}
+
+//Post history class
+Class Post_history{
+    //DB Stuff
+    private $conn;
+    private $table = 'post';
+
+    //Post Properties
+    public $postID;
+    public $pText;
+    public $lastUpdate;
+    public $postDate;
+    public $imageURL;
+    public $postTitle;
+    public $pageID;
+    public $serviceID;
+    public $username;
+    public $serviceType;
+
+    //Constructor with db
+    public function __construct($db){
+        $this->conn = $db;
+    }
+
+    public function read_post_history(){
+        //Create query
+        $query = 'SELECT * FROM post, spage WHERE post.pageID = spage.pageID';
+        //Preparing statement
+        $stmt = $this->conn->prepare($query);
+        //Executing query
+        $stmt->execute();
+
+        return $stmt;
+    }
 
 }
 

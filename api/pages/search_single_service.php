@@ -10,18 +10,21 @@ include_once '../../models/Service.php';
 $database = new Database();
 $db = $database->connect();
 
-//Instantiate service object
+//Instantiate post object
 $service = new Service($db);
 
-//Get userID from URL
-$service->userID = isset($_GET['userID']) ? $_GET['userID'] : die();
+//Get serviceID from URL
+$service->serviceID = isset($_GET['serviceID']) ? $_GET['serviceID'] : die();
 
-//Get service
-$service->service_verify();
+//Get post
+$service->search_service();
 
 //Create array
 $service_arr = array(
-    'userID' => $service->userID,
+    'serviceID' => $service->serviceID,
+    'serviceTitle' => $service->serviceTitle,
+    'serviceDate' => $service->serviceDate,
+    'publish' => $service->publish,
     'serviceType' => $service->serviceType
 );
 
