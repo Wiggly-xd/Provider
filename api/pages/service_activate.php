@@ -33,3 +33,4 @@ if($service->activate_service()){
         array('message' => 'Service Not Updated')
     );
 }
+?>

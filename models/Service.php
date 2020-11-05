@@ -114,19 +114,17 @@ Class Service{
                 publish = 0,
             WHERE
                 serviceID = :serviceID';
-        }
-        else{
+        }else{
             break;
         }
-            if($publish = 0){
-                $query = 'UPDATE ' . $this->table . '
-                SET
-                    publish = 1,
-                WHERE
-                    serviceID = :serviceID';
-                }
-            else{
-                break;
+        if($publish = 0){
+            $query = 'UPDATE ' . $this->table . '
+            SET
+                publish = 1,
+            WHERE
+                serviceID = :serviceID';
+        }else{
+            break;
         }
     
 
