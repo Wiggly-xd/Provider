@@ -1,4 +1,4 @@
-<?php//IGNORE THIS FILE FOR NOW, CANNOT KEEP WHILE MERGING BUT DON'T WANT TO LOSE
+<?php
 //Headers 
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
