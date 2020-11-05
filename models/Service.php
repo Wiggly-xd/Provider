@@ -103,7 +103,53 @@ Class Service{
         $this->serviceType = $row['serviceType'];
         $this->userID = $row['userID'];
     }
+
+    //Update publish BOOL 
+    public function activate_service(){
+        //Update query
+        
+        if($publish = 1){
+            $query = 'UPDATE ' . $this->table . '
+            SET
+                publish = 0,
+            WHERE
+                serviceID = :serviceID';
+        }
+        else{
+            break;
+        }
+            if($publish = 0){
+                $query = 'UPDATE ' . $this->table . '
+                SET
+                    publish = 1,
+                WHERE
+                    serviceID = :serviceID';
+                }
+            else{
+                break;
+        }
     
+
+            //Preparing statement
+            $stmt = $this->conn->prepare($query);
+
+            //Clean data
+            $this->publish =htmlspecialchars(strip_tags($this->publish));
+            $this->serviceID =htmlspecialchars(strip_tags($this->serviceID));
+
+            //Bind data
+            $stmt->bindParam(':publish', $this->publish);
+            $stmt->bindParam(':serviceID', $this->serviceID);
+
+            //Executing query
+            if($stmt->execute()){
+                return true;
+            }
+
+            //Print error
+            printf("Error: %s.\n", $stmt->error);
+            return false;
+    }
 
 }
 

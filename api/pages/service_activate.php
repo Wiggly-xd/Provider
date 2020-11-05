@@ -1,10 +1,12 @@
 <?php
-//Headers 
+//Headers
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: PUT');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods,Authorization,X-Requested-With');
 
 include_once '../../config/Database.php';
-include_once '../../models/Service.php';
+include_once '../../models/Post.php';
 
 //Instantiate DB & connect
 $database = new Database();
@@ -12,45 +14,22 @@ $db = $database->connect();
 
 //Instantiate post object
 $service = new Service($db);
-$result = $service->read_post();
 
-//Get row count
-$num = $result->rowCount();
+//Get raw posted data
+$data = json_decode(file_get_contents("php://input"));
 
-//Check if any posts
-if($num > 0){
-    //Post array
-    $service_arr = array();
-    $service_arr['data'] = array();
+//Set serviceID to UPDATE
+$service->serviceID = $data->serviceID;
 
-    while($row = $result->fetch(PDO::FETCH_ASSOC)){
-        extract($row);
+$service->publish = $data->publish;
 
-        $service_item = array(
-            'postID' => $postID,
-            'postTitle' => $postTitle,
-            'username' => $username,
-            'pText' => $pText,
-            'lastUpdate' => $lastUpdate,
-            'postDate' => $postDate,
-            'imageURL' => $imageURL,
-            'pageID' => $pageID,
-            'serviceID' => $serviceID,
-            'serviceType' => $serviceType
-        );
-
-        //Push to "data"
-        array_push($posts_arr['data'], $post_item);
-    }
-    //Turn to JSON and output
-    echo json_encode($posts_arr);
-
+//Update publish
+if($service->activate_service()){
+    echo json_encode(
+        array('message' => 'Service Updated')
+    );
 }else{
-//No posts
-echo json_encode(
-    array('message' => 'No Posts Found')
-);
+    echo json_encode(
+        array('message' => 'Service Not Updated')
+    );
 }
-
-
-?>
