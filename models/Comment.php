@@ -1,5 +1,21 @@
 <?php
+Class Comment_allowed{
+    //DB variables
+    private $conn;
+    private $table = 'comment';
 
+    //Comment Properties
+    public $commentId;
+    public $cText;
+    public $cDate;
+    public $pageID;
+
+
+    //Constructor with db
+    public function __construct($db){
+        $this->conn = $db;
+    }
+}
 Class Comment_history{
     //DB Stuff
     private $conn;

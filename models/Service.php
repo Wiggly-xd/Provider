@@ -104,40 +104,19 @@ Class Service{
         $this->userID = $row['userID'];
     }
 
-    //Update publish BOOL 
+    //Update publish BOOL to TRUE
     public function activate_service(){
-        //Update query
-        
-        if($publish = 1){
-            $query = 'UPDATE ' . $this->table . '
-            SET
-                publish = 0,
-            WHERE
-                serviceID = :serviceID';
-        }else{
-            break;
-        }
-        if($publish = 0){
-            $query = 'UPDATE ' . $this->table . '
-            SET
-                publish = 1,
-            WHERE
-                serviceID = :serviceID';
-        }else{
-            break;
-        }
-    
+        if(isset($_POST['activate_btn'])){
+        $query = 'UPDATE ' . $this->table . 'SET publish = ?';
 
             //Preparing statement
             $stmt = $this->conn->prepare($query);
 
             //Clean data
             $this->publish =htmlspecialchars(strip_tags($this->publish));
-            $this->serviceID =htmlspecialchars(strip_tags($this->serviceID));
 
             //Bind data
-            $stmt->bindParam(':publish', $this->publish);
-            $stmt->bindParam(':serviceID', $this->serviceID);
+            $stmt->bindParam(1, $this->publish);
 
             //Executing query
             if($stmt->execute()){
@@ -147,8 +126,32 @@ Class Service{
             //Print error
             printf("Error: %s.\n", $stmt->error);
             return false;
+        }
     }
+    //Update publish BOOL to FALSE
+    public function deactivate_service(){
+        if(isset($_POST['deactivate_btn'])){
+        $query = 'UPDATE ' . $this->table . 'SET publish = ?';
 
+            //Preparing statement
+            $stmt = $this->conn->prepare($query);
+
+            //Clean data
+            $this->publish =htmlspecialchars(strip_tags($this->publish));
+
+            //Bind data
+            $stmt->bindParam(0, $this->publish);
+
+            //Executing query
+            if($stmt->execute()){
+                return true;
+            }
+
+            //Print error
+            printf("Error: %s.\n", $stmt->error);
+            return false;
+        }
+    }
 }
 
 //Service history

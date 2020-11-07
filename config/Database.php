@@ -4,8 +4,8 @@ Class Database {
     //DB Params
     private $host = 'localhost';
     private $db_name = 'wider';
-    private $username = 'wider@sko.te4-ntig.se';
-    private $password = 'wider123';
+    private $username = 'root';
+    private $password = '';
     private $conn;
 
     //DB Connect
