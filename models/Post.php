@@ -138,6 +138,81 @@ Class Post{
             return false;
         }
 
+        //Update publish BOOL to TRUE
+        public function activate_post(){
+            if(isset($_POST['post_activate_btn'])){
+            $query = 'UPDATE ' . $this->table . 'SET publish = ?';
+
+                //Preparing statement
+                $stmt = $this->conn->prepare($query);
+
+                //Clean data
+                $this->publish = htmlspecialchars(strip_tags($this->publish));
+
+               //Bind data
+               $stmt->bindParam(1, $this->publish);
+
+               //Executing query
+              if($stmt->execute()){
+                return true;
+              }
+
+              //Print error
+               printf("Error: %s.\n", $stmt->error);
+               return false;
+            }
+        }
+        
+        //Update publish BOOL to FALSE
+        public function deactivate_post(){
+            if(isset($_POST['post_deactivate_btn'])){
+            $query = 'UPDATE ' . $this->table . 'SET publish = ?';
+
+                //Preparing statement
+                $stmt = $this->conn->prepare($query);
+
+                //Clean data
+                $this->publish =htmlspecialchars(strip_tags($this->publish));
+
+                //Bind data
+                $stmt->bindParam(0, $this->publish);
+
+                //Executing query
+                if($stmt->execute()){
+                    return true;
+                }
+
+            //Print error
+            printf("Error: %s.\n", $stmt->error);
+            return false;
+        }
+    }
+}
+Class Post_activate{
+    //DB Stuff
+    private $conn;
+    private $table = 'post';
+
+    //Post Properties
+    public $postID;
+    public $pText;
+    public $lastUpdate;
+    public $postDate;
+    public $imageURL;
+    public $postTitle;
+    public $pageID;
+    public $username;
+    public $serviceTitle;
+    public $serviceDate;
+    public $serviceID;
+    public $serviceType;
+
+    //Constructor with db
+    public function __construct($db){
+        $this->conn = $db;
+    }
+
+
 }
 
 //Post history class
