@@ -17,4 +17,4 @@ $service = new Service($db);
 
 
 ?>
-<!--Insert a button with the value "activate_btn" or "deactivate_btn"-->
+<!--Insert a button with the value "comment_activate_btn" or "comment_deactivate_btn"-->
