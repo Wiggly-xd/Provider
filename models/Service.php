@@ -106,14 +106,14 @@ Class Service{
 
     //Update publish BOOL to TRUE
     public function activate_service(){
-        if(isset($_POST['activate_btn'])){
+        if(isset($_POST['service_activate_btn'])){
         $query = 'UPDATE ' . $this->table . 'SET publish = ?';
 
             //Preparing statement
             $stmt = $this->conn->prepare($query);
 
             //Clean data
-            $this->publish =htmlspecialchars(strip_tags($this->publish));
+            $this->publish = htmlspecialchars(strip_tags($this->publish));
 
             //Bind data
             $stmt->bindParam(1, $this->publish);
@@ -130,7 +130,7 @@ Class Service{
     }
     //Update publish BOOL to FALSE
     public function deactivate_service(){
-        if(isset($_POST['deactivate_btn'])){
+        if(isset($_POST['service_deactivate_btn'])){
         $query = 'UPDATE ' . $this->table . 'SET publish = ?';
 
             //Preparing statement
