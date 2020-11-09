@@ -16,15 +16,35 @@ Class Service{
         $this->conn = $db;
     }
 
+    //Get Single Service
+    public function read_single_service(){
+        $query = 'SELECT * FROM service';
+        //Preparing statement
+        $stmt = $this->conn->prepare($query);
+
+        //Binding serviceID
+        $stmt->bindParam(1, $this->serviceID);
+
+        //Executing query
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        //Setting properties
+        $this->serviceID = $row['serviceID'];
+        $this->serviceTitle = $row['serviceTitle'];
+    }
+
+    //Create service
     public function create_service(){
         //Create query
         $query = 'INSERT INTO ' . $this->table . '
         SET
-        serviceID = :serviceID,
-        serviceDate = CURDATE(),
-        serviceTitle = :serviceTitle,
-        publish = :publish,
-        serviceType = :serviceType';
+            serviceID = :serviceID,
+            servideDate = CURDATE(),
+            serviceTitle = :serviceTitle';
+        
+        $query2 = 'INSERT INTO historyservice (serviceID, serviceTitle, serviceDate) VALUES(:serviceID, :serviceTitle, CURDATE())';
 
             //Preparing statement
             $stmt = $this->conn->prepare($query);
@@ -32,24 +52,111 @@ Class Service{
             //Clean data
             $this->serviceID =htmlspecialchars(strip_tags($this->serviceID));
             $this->serviceTitle =htmlspecialchars(strip_tags($this->serviceTitle));
-            $this->serviceType =htmlspecialchars(strip_tags($this->serviceType));
-            $this->publish =htmlspecialchars(strip_tags($this->publish));
 
             //Bind data
             $stmt->bindParam(':serviceID', $this->serviceID);
             $stmt->bindParam(':serviceTitle', $this->serviceTitle);
-            $stmt->bindParam(':serviceType', $this->serviceType);
-            $stmt->bindParam(':publish', $this->publish);
 
+            $stmt2 = $this->conn->prepare($query2);
+
+            //Clean data
+            $this->serviceID =htmlspecialchars(strip_tags($this->serviceID));
+            $this->serviceTitle =htmlspecialchars(strip_tags($this->serviceTitle));
+                    
+            //Bind data
+            $stmt2->bindParam(':serviceID', $this->serviceID);
+            $stmt2->bindParam(':serviceTitle', $this->serviceTitle);
+                
             //Executing query
-            if($stmt->execute()){
+            if($stmt->execute() && $stmt2->execute()){
                 return true;
             }
-
+                
             //Print error
             printf("Error: %s.\n", $stmt->error);
             return false;
     }
+
+        //Update service
+        public function update_service(){
+            //Update query
+            $query = 'UPDATE ' . $this->table . '
+            SET
+                serviceID = :serviceID,
+                serviceDate = CURDATE(),
+                serviceTitle = :serviceTitle,
+            WHERE
+                serviceID = :serviceID';
+
+            $query2 = 'INSERT INTO historyservice (serviceID, serviceTitle, serviceDate) VALUES(:serviceID, :serviceTitle, CURDATE())';
+    
+                //Preparing statement
+                $stmt = $this->conn->prepare($query);
+    
+                //Clean data
+                $this->serviceID =htmlspecialchars(strip_tags($this->serviceID));
+                $this->serviceTitle =htmlspecialchars(strip_tags($this->serviceTitle));
+    
+                //Bind data
+                $stmt->bindParam(':serviceID', $this->serviceID);
+                $stmt->bindParam(':serviceTitle', $this->serviceTitle);
+    
+                $stmt2 = $this->conn->prepare($query2);
+
+                //Clean data
+                $this->serviceID =htmlspecialchars(strip_tags($this->serviceID));
+                $this->serviceTitle =htmlspecialchars(strip_tags($this->serviceTitle));
+                        
+                //Bind data
+                $stmt2->bindParam(':serviceID', $this->serviceID);
+                $stmt2->bindParam(':serviceTitle', $this->serviceTitle);
+                    
+                //Executing query
+                if($stmt->execute() && $stmt2->execute()){
+                    return true;
+                }
+                    
+                //Print error
+                printf("Error: %s.\n", $stmt->error);
+                return false;
+        }
+
+        //Delete service
+        public function delete_service(){
+            //Creating query
+            $query = 'DELETE FROM '. $this->table .'
+            WHERE serviceID = :serviceID';
+
+            $query2 = 'INSERT INTO historyservice (serviceID, serviceTitle, serviceDate) VALUES(:serviceID, :serviceTitle, CURDATE())';
+            
+            //Preparing statement
+            $stmt = $this->conn->prepare($query);
+
+            //Clean data
+            $this->serviceID =htmlspecialchars(strip_tags($this->serviceID));
+
+            //Bind data
+            $stmt->bindParam(':serviceID', $this->serviceID);
+
+            $stmt2 = $this->conn->prepare($query2);
+
+            //Clean data
+            $this->serviceID =htmlspecialchars(strip_tags($this->serviceID));
+            $this->serviceTitle =htmlspecialchars(strip_tags($this->serviceTitle));
+                    
+            //Bind data
+            $stmt2->bindParam(':serviceID', $this->serviceID);
+            $stmt2->bindParam(':serviceTitle', $this->serviceTitle);
+                
+            //Executing query
+            if($stmt->execute() && $stmt2->execute()){
+                return true;
+            }
+                
+            //Print error
+            printf("Error: %s.\n", $stmt->error);
+            return false;
+        }
 
     public function read_service(){
         //Create query
@@ -78,7 +185,6 @@ Class Service{
 
         //Setting properties
         $this->serviceTitle = $row['serviceTitle'];
-        $this->serviceDate = $row['serviceDate'];
         $this->serviceID = $row['serviceID'];
         $this->serviceType = $row['serviceType'];
         $this->publish = $row['publish'];

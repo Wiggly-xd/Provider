@@ -50,24 +50,43 @@ Class User{
         //Create query
         $query = 'INSERT INTO ' . $this->table . '
         SET
-            username = :username,
-            password = :password';
-
-            //Preparing statement
-            $stmt = $this->conn->prepare($query);
-
-            //Clean data
-            $this->username =htmlspecialchars(strip_tags($this->username));
-            $this->password =htmlspecialchars(strip_tags($this->password));
-
-            //Bind data
-            $stmt->bindParam(':username', $this->username);
-            $stmt->bindParam(':password', $this->password);
-
-            //Executing query
-            if($stmt->execute()){
-                return true;
-            }
+        username = :username,
+        password = :password,
+        firstName = :firstName,
+        middleName = :middleName,
+        lastName = :lastName
+        moderator = :moderator,
+        admin = :admin,
+        userID = :userID';
+        
+        
+        //Preparing statement
+        $stmt = $this->conn->prepare($query);
+        
+        //Clean data
+        $this->username =htmlspecialchars(strip_tags($this->username));
+        $this->password =htmlspecialchars(strip_tags($this->password));
+        $this->firstName =htmlspecialchars(strip_tags($this->firstName));
+        $this->middleName =htmlspecialchars(strip_tags($this->middleName));
+        $this->lastName =htmlspecialchars(strip_tags($this->lastName));
+        $this->moderator =htmlspecialchars(strip_tags($this->moderator));
+        $this->admin =htmlspecialchars(strip_tags($this->admin));
+        $this->userID =htmlspecialchars(strip_tags($this->userID));
+        
+        //Bind data
+        $stmt->bindParam(':username', $this->username);
+        $stmt->bindParam(':password', $this->password);
+        $stmt->bindParam(':firstName', $this->firstName);
+        $stmt->bindParam(':middleName', $this->middleName);
+        $stmt->bindParam(':lastName', $this->lastName);
+        $stmt->bindParam(':moderator', $this->moderator);
+        $stmt->bindParam(':admin', $this->admin);
+        $stmt->bindParam(':userID', $this->userID);
+        
+        //Executing query
+        if($stmt->execute()){
+            return true;
+        }
 
             //Print error
             printf("Error: %s.\n", $stmt->error);
@@ -80,20 +99,38 @@ Class User{
             $query = 'UPDATE ' . $this->table . '
             SET
                 username = :username,
-                password = :password
+                password = :password,
+                firstName = :firstName,
+                middleName = :middleName,
+                lastName = :lastName
+                moderator = :moderator,
+                admin = :admin,
+                userID = :userID
             WHERE
-                userID = ?';
+                userID = :userID';
     
                 //Preparing statement
                 $stmt = $this->conn->prepare($query);
     
                 //Clean data
                 $this->username =htmlspecialchars(strip_tags($this->username));
-                $this->password =htmlspecialchars(strip_tags($this->password));
+                $this->password =htmlspecialchars(strip_tags($this->historyDate));
+                $this->firstName =htmlspecialchars(strip_tags($this->historyText));
+                $this->middleName =htmlspecialchars(strip_tags($this->middleName));
+                $this->lastName =htmlspecialchars(strip_tags($this->lastName));
+                $this->moderator =htmlspecialchars(strip_tags($this->moderator));
+                $this->admin =htmlspecialchars(strip_tags($this->admin));
+                $this->userID =htmlspecialchars(strip_tags($this->userID));
     
                 //Bind data
                 $stmt->bindParam(':username', $this->username);
                 $stmt->bindParam(':password', $this->password);
+                $stmt->bindParam(':firstName', $this->firstName);
+                $stmt->bindParam(':middleName', $this->middleName);
+                $stmt->bindParam(':lastName', $this->lastName);
+                $stmt->bindParam(':moderator', $this->moderator);
+                $stmt->bindParam(':admin', $this->admin);
+                $stmt->bindParam(':userID', $this->userID);
     
                 //Executing query
                 if($stmt->execute()){
@@ -104,6 +141,31 @@ Class User{
                 printf("Error: %s.\n", $stmt->error);
                 return false;
         }
+
+        //Delete user
+        public function delete_user(){
+            //Creating query
+            $query = 'DELETE FROM '. $this->table .'
+            WHERE userID = :userID';
+
+            //Preparing statement
+            $stmt = $this->conn->prepare($query);
+
+            //Clean data
+            $this->userID =htmlspecialchars(strip_tags($this->userID));
+
+            //Bind data
+            $stmt->bindParam(':userID', $this->userID);
+
+            //Executing query
+            if($stmt->execute()){
+                return true;
+            }
+            
+            //Print error
+            printf("Error: %s.\n", $stmt->error);
+            return false;
+        }d
     }
 
     //User history

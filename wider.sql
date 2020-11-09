@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Värd: 127.0.0.1
--- Tid vid skapande: 07 nov 2020 kl 15:00
+-- Tid vid skapande: 09 nov 2020 kl 10:23
 -- Serverversion: 10.4.14-MariaDB
 -- PHP-version: 7.2.33
 
@@ -106,6 +106,8 @@ CREATE TABLE `post` (
   `postDate` varchar(255) NOT NULL,
   `imageURL` varchar(255) DEFAULT NULL,
   `postTitle` varchar(255) NOT NULL,
+  `publish` tinyint(4) NOT NULL,
+  `allowComments` tinyint(4) NOT NULL,
   `pageID` int(11) NOT NULL,
   `serviceID` int(11) NOT NULL COMMENT 'foreign_key',
   `username` varchar(255) NOT NULL COMMENT 'foreign_key'
@@ -115,9 +117,9 @@ CREATE TABLE `post` (
 -- Dumpning av Data i tabell `post`
 --
 
-INSERT INTO `post` (`postID`, `pText`, `lastUpdate`, `postDate`, `imageURL`, `postTitle`, `pageID`, `serviceID`, `username`) VALUES
-(9, 'cool', '', '2020-10-29', 'bilder/kim.jpg', 'wow', 5, 1, 'nj'),
-(11, 'weeewo', '', '2020-10-29', 'bilder/marsvin.jpg', 'testermanbigwow', 7, 2, 'nj');
+INSERT INTO `post` (`postID`, `pText`, `lastUpdate`, `postDate`, `imageURL`, `postTitle`, `publish`, `allowComments`, `pageID`, `serviceID`, `username`) VALUES
+(9, 'cool', '', '2020-10-29', 'bilder/kim.jpg', 'wow', 1, 1, 5, 1, 'nj'),
+(11, 'weeewo', '', '2020-10-29', 'bilder/marsvin.jpg', 'testermanbigwow', 0, 0, 7, 2, 'nj');
 
 -- --------------------------------------------------------
 

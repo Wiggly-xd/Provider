@@ -23,7 +23,6 @@ $post->pageID = $data->pageID;
 
 $post->postTitle = $data->postTitle;
 $post->pText = $data->pText;
-$post->postDate = $data->postDate;
 $post->lastUpdate = $data->lastUpdate;
 $post->username = $data->username;
 

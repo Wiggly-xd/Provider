@@ -23,7 +23,6 @@ $service->search_service();
 $service_arr = array(
     'serviceID' => $service->serviceID,
     'serviceTitle' => $service->serviceTitle,
-    'serviceDate' => $service->serviceDate,
     'publish' => $service->publish,
     'serviceType' => $service->serviceType
 );

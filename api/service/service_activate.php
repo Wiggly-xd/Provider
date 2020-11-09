@@ -31,8 +31,6 @@ if($num > 0){
             'postTitle' => $postTitle,
             'username' => $username,
             'pText' => $pText,
-            'lastUpdate' => $lastUpdate,
-            'postDate' => $postDate,
             'imageURL' => $imageURL,
             'pageID' => $pageID,
             'serviceID' => $serviceID,

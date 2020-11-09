@@ -20,7 +20,6 @@ $data = json_decode(file_get_contents("php://input"));
 
 $post->postTitle = $data->postTitle;
 $post->pText = $data->pText;
-$post->postDate = $data->postDate;
 $post->lastUpdate = $data->lastUpdate;
 $post->username = $data->username;
 $post->pageID = $data->pageID;

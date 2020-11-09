@@ -19,7 +19,6 @@ $service = new Service($db);
 $data = json_decode(file_get_contents("php://input"));
 
 $service->serviceID = $data->serviceID;
-$service->serviceDate = $data->serviceDate;
 $service->serviceTitle = $data->serviceTitle;
 $service->serviceType = $data->serviceType;
 
