@@ -22,6 +22,22 @@ $stmt2->execute();
 
 $stmt2->close();
 
+$stmt3 = $mysqli->prepare("DELETE FROM image WHERE serviceID='$serviceID'");
+
+$stmt3->execute();
+
+$stmt3->close();
+
+if($stmt){
+
+    $sql = "INSERT INTO history(historyText) VALUES('$postTitle')";
+    mysqli_query($db, $sql);
+
+}
+
 header('Location: posts.php');
 
 ?>
+<a href="search.php">Sök</a>
+</body>
+</html>

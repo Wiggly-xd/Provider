@@ -36,6 +36,7 @@ if ($exist) {
 $_SESSION['loggedin'] = true;
 $_SESSION['username'] = $username;
 $_SESSION['admin'] = $admin;
+$_SESSION['moderator'] = $moderator;
 header('Location: pagemaker.php');
 exit();
 }

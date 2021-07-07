@@ -1,46 +1,55 @@
-
-<!DOCTYPE HTML>
-<html>
-
-
-<br>
-
 <?php
-include_once 'connect.php';
+include("dbconn.php");
+
+session_start();
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+    echo "<p>logged in as: " . $_SESSION['username'] . "!";
+} else {
+    header('Location: login.html');
+}
+
 
 $search = $_REQUEST["search"];
 
-$query = "SELECT * FROM service WHERE serviceTitle LIKE '%$search%'";
-$result = mysqli_query($mysqli,$query);
+$query = "SELECT * FROM post WHERE postTitle LIKE '%$search%'"; //sök efter bok
+$result = mysqli_query($db,$query);
 
-if(mysqli_num_rows($result)>0)if(mysqli_num_rows($result)>0)
 
-{
-?>
 
-<table border="2" align="center" cellpadding="5" cellspacing="5">
 
+
+echo '<table border="2" align="center" cellpadding="5" cellspacing="5">
 <tr>
-<th> Service titel </th>
-<th> Datum
+<th class="postTitle"> Posttitel </th>
+<th class="postDate"> Datum  </th>
+<th class="postType"> Typ </th>
+<th> Ta bort</th>
+</tr>';
+
+while($row = mysqli_fetch_assoc($result)){
+
+echo "<tr>
+<td class='postTitle'><div id='hide'>".$row['postTitle']."</td>
+<td class='postDate'>".$row['postDate']."</td>
+<td class='postType'>".$row['postType']."</div></td>
+<td><a href ='delete.php?rn=$row[postTitle]'>Delete</td>
 </tr>
+";
+    }// end while loop
 
-<?php while($row = mysqli_fetch_assoc($result))
-{
-?>
-<tr>
-<td><?php echo $row["serviceTitle"];?> </td>
-<td><?php echo $row["serviceDate"];?> </td>
-<td><?php echo $row["serviceID"];?> </td>
-</tr>
-<?php
-}
-}
-else
-
-?>
-
+echo '<form action="updatera.php" method="post">';
+    include_once "loop.php";
+echo '<input type="text" placeholder="Ny titel" name="postTitle">
+    <input type="text" placeholder="Ny text" name="pText">
+    <?php
+    include_once "postID.php";
+    ?>  
+    <button>Update</button>
+</form>
 </table>
-</body>
-</html>
-<br>
+<input type="checkbox" name="postTitle"> Posttitel
+<input type="checkbox" name="postDate"> Datum
+<input type="checkbox" name="postType"> Typ
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="test.js"></script>';
+?>
